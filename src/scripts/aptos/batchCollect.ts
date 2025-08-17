@@ -47,9 +47,9 @@ async function main() {
         const RESERVE_AMOUNT = 1000; // 0.000001 APT
         const totalReserve = estimatedGasFee + RESERVE_AMOUNT;
         
-        console.log(`预估Gas费用: ${estimatedGasFee} octas`);
-        console.log(`保留缓冲: ${RESERVE_AMOUNT} octas`);
-        console.log(`总保留: ${totalReserve} octas`);
+        // console.log(`预估Gas费用: ${estimatedGasFee} octas`);
+        // console.log(`保留缓冲: ${RESERVE_AMOUNT} octas`);
+        // console.log(`总保留: ${totalReserve} octas`);
         
         // 检查余额是否足够转账
         if (aptBalance <= totalReserve) {
@@ -99,7 +99,7 @@ async function main() {
         
         if (executedTransaction.success) {
           console.log(`✅ Collect from ${wallet.address} success: ${executedTransaction.hash}`);
-          console.log(`Gas used: ${executedTransaction.gas_used}`);
+          // console.log(`Gas used: ${executedTransaction.gas_used}`);
         } else {
           console.error(`❌ Transaction failed: ${executedTransaction.vm_status}`);
         }

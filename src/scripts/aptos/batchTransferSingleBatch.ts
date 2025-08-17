@@ -7,8 +7,20 @@ const SEND_AMOUNT = Number(process.env.SEND_AMOUNT) * APTOS_DECIMALS || APTOS_DE
 
 async function main() {
   try {
-    const privateKeyBytes = Buffer.from(SENDER_PRIVATE_KEY, 'hex');
+    // 处理私钥格式，支持 0x 开头
+    let privateKeyHex = SENDER_PRIVATE_KEY;
+    if (privateKeyHex.startsWith('0x')) {
+      privateKeyHex = privateKeyHex.slice(2); // 移除 0x 前缀
+    }
+    
+    // 验证私钥长度 (Ed25519 私钥应该是 64 个字符)
+    if (privateKeyHex.length !== 64) {
+      throw new Error(`Invalid private key length. Expected 64 characters, got ${privateKeyHex.length}`);
+    }
+    
+    const privateKeyBytes = Buffer.from(privateKeyHex, 'hex');
     const privateKey = new Ed25519PrivateKey(privateKeyBytes);
+    console.log(`privateKeyBytes: ${privateKeyBytes}, privateKey: ${privateKey}`);
     let sender = Account.fromPrivateKey({ privateKey });
     console.log(`sender is ${sender.accountAddress} `);
     // 从数据库读取钱包地址
